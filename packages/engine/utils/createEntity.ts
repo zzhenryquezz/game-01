@@ -1,11 +1,8 @@
 import * as b from 'bitecs'
 import { compose } from '@sidekick-coder/compositor'
+import { EntityComposable } from './defineEntityComposable'
 
-export interface EntityComposable {
-    (word: b.IWorld, eid: number): any
-}
-
-function addEntity(word: b.IWorld, eid: number) {
+function addEntity(_word: b.IWorld, eid: number) {
     return {
         eid,
     }
