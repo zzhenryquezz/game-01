@@ -15,7 +15,7 @@ export function createAnimationSystem() {
 
     function onUpdate(eid: number) {
         const frames: Frame[] = []
-        const speed = Animation.speed[eid] || 5
+        const speed = Animation.speed[eid]
         const count = Animation.framesCount[eid]
 
         for (let i = 0; i < count; i++) {

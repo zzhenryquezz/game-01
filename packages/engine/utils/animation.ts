@@ -1,7 +1,5 @@
-import { addComponent, addEntity, IWorld } from 'bitecs'
-import Sprite from '../components/Sprite'
+import { addComponent } from 'bitecs'
 import { defineEntityExtension } from './defineEntityComposable'
-import { encode } from './helpers'
 import Animation from '../components/Animation'
 
 export interface UpdateOptions {}
@@ -13,6 +11,7 @@ export interface Frame {
 
 export interface AnimationList {
     name: string
+    speed?: number
     frames: Frame[]
 }
 
@@ -20,8 +19,8 @@ export function makeAnimation(eid: number) {
     const animationList = [] as AnimationList[]
 
     const composable = {
-        add(name: string, frames: Frame[]) {
-            animationList.push({ name, frames })
+        add(payload: AnimationList) {
+            animationList.push(payload)
         },
         play(name: string) {
             const index = animationList.findIndex((a) => a.name === name)
@@ -41,6 +40,7 @@ export function makeAnimation(eid: number) {
             })
 
             Animation.framesCount[eid] = animation.frames.length
+            Animation.speed[eid] = animation.speed || 5
         },
     }
 
