@@ -9,9 +9,7 @@ export function createAnimationSystem() {
 
     const query = defineQuery([Animation, Sprite])
 
-    function onEnter(eid: number) {
-        console.log('[animation] enter', eid)
-    }
+    function onEnter(eid: number) {}
 
     function onUpdate(eid: number) {
         const frames: Frame[] = []
@@ -29,7 +27,10 @@ export function createAnimationSystem() {
 
         const frame = frames[index]
 
+        if (!frame) return
+
         Sprite.x[eid] = frame.x
+        Sprite.y[eid] = frame.y
     }
 
     return defineSystem((word: GameWord) => {

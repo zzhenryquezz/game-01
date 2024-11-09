@@ -8,4 +8,7 @@ export default defineComponent({
 
     width: Types.ui8,
     height: Types.ui8,
+
+    flipX: Types.ui8,
+    flipY: Types.ui8,
 })

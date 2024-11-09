@@ -39,10 +39,29 @@ export function createRenderSystem(ctx: CanvasRenderingContext2D) {
 
         const width = Sprite.width[eid]
         const height = Sprite.height[eid]
-        const frameX = Sprite.x[eid] * width
-        const frameY = Sprite.y[eid] * height
+        const frameX = Sprite.x[eid]
+        const frameY = Sprite.y[eid]
+        const flipX = Sprite.flipX[eid]
+        const flipY = Sprite.flipY[eid]
+
+        ctx.save()
+        // Flip horizontally if needed
+        if (flipX) {
+            ctx.translate(x + width, y)
+            ctx.scale(-1, 1)
+        } else {
+            ctx.translate(x, y)
+        }
+
+        // Flip vertically if needed
+        if (flipY) {
+            ctx.translate(0, height)
+            ctx.scale(1, -1)
+        }
 
         ctx.drawImage(image, frameX, frameY, width, height, x, y, width, height)
+
+        ctx.restore()
     }
 
     function onExit(eid: number) {

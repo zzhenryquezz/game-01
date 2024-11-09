@@ -11,6 +11,9 @@ interface UpdateOptions {
 
     width: number
     height: number
+
+    flipX: boolean
+    flipY: boolean
 }
 
 export function makeSprite(eid: number) {
@@ -34,6 +37,10 @@ export function makeSprite(eid: number) {
 
             if (options?.height) {
                 Sprite.height[eid] = options.height
+            }
+
+            if (options?.flipX !== undefined) {
+                Sprite.flipX[eid] = options.flipX ? 1 : 0
             }
         },
     }

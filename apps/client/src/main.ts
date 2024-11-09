@@ -25,15 +25,25 @@ player.sprite.update({
 
 player.animation.add({
     name: 'idle',
+    speed: 12,
+    frames: [
+        { x: 4 * 32, y: 3 * 38 },
+        { x: 5 * 32, y: 3 * 38 },
+        { x: 6 * 32, y: 3 * 38 },
+    ],
+})
+
+player.animation.add({
+    name: 'walk',
     frames: [
         { x: 0, y: 0 },
-        { x: 1, y: 0 },
-        { x: 2, y: 0 },
-        { x: 3, y: 0 },
-        { x: 4, y: 0 },
-        { x: 5, y: 0 },
-        { x: 6, y: 0 },
-        { x: 7, y: 0 },
+        { x: 1 * 32, y: 0 },
+        { x: 2 * 32, y: 0 },
+        { x: 3 * 32, y: 0 },
+        { x: 4 * 32, y: 0 },
+        { x: 5 * 32, y: 0 },
+        { x: 6 * 32, y: 0 },
+        { x: 7 * 32, y: 0 },
     ],
 })
 
@@ -48,51 +58,29 @@ player.action.add({
 
 player.action.add({
     name: 'right',
-    callback: () => {
-        player.position.move(1, 0)
-    },
+    callback: () => {},
 })
 
 player.keymap.add({
     keys: ['ArrowLeft'],
     onKeydown: () => {
-        console.log('start moving right')
+        player.animation.play('walk')
+        player.sprite.update({ flipX: true })
     },
     onKeyup: () => {
-        console.log('stop moving right')
+        player.animation.play('idle')
     },
 })
 
 player.keymap.add({
     keys: ['ArrowRight'],
     onKeydown: () => {
-        console.log('start moving right')
+        player.animation.play('walk')
+        player.sprite.update({ flipX: false })
     },
     onKeyup: () => {
-        console.log('stop moving right')
+        player.animation.play('idle')
     },
 })
-
-const enemy = createEntity(game.word, [useSprite, useAnimation, usePosition])
-
-enemy.sprite.update({
-    src: '/enemy-01.png',
-    width: 32,
-    height: 32,
-})
-
-enemy.position.move(32, 0)
-
-enemy.animation.add({
-    name: 'idle',
-    speed: 10,
-    frames: [
-        { x: 0, y: 0 },
-        { x: 1, y: 0 },
-        { x: 2, y: 0 },
-    ],
-})
-
-enemy.animation.play('idle')
 
 game.start()
