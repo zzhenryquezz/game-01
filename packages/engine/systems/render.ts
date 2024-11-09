@@ -45,6 +45,7 @@ export function createRenderSystem(ctx: CanvasRenderingContext2D) {
         const flipY = Sprite.flipY[eid]
 
         ctx.save()
+
         // Flip horizontally if needed
         if (flipX) {
             ctx.translate(x + width, y)
@@ -59,7 +60,7 @@ export function createRenderSystem(ctx: CanvasRenderingContext2D) {
             ctx.scale(1, -1)
         }
 
-        ctx.drawImage(image, frameX, frameY, width, height, x, y, width, height)
+        ctx.drawImage(image, frameX, frameY, width, height, 0, 0, width, height)
 
         ctx.restore()
     }

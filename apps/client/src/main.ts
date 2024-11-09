@@ -2,11 +2,10 @@ import './style.css'
 import { createGame } from 'engine/game'
 import { createEntity } from 'engine/utils/createEntity'
 
-import { usePosition } from 'engine/utils/position'
 import { useSprite } from 'engine/utils/sprite'
 import { useAnimation } from 'engine/utils/animation'
 import { useKeymap } from 'engine/utils/keymap'
-import { useAction } from 'engine/utils/action'
+import { usePhysic } from 'engine/utils/physic'
 
 const canvas = document.getElementById('game') as HTMLCanvasElement
 
@@ -15,13 +14,15 @@ canvas.height = window.innerHeight
 
 const game = createGame(canvas)
 
-const player = createEntity(game.word, [useSprite, useAnimation, usePosition, useKeymap, useAction])
+const player = createEntity(game.word, [useSprite, useAnimation, useKeymap, usePhysic])
 
 player.sprite.update({
     src: '/player.png',
     width: 32,
     height: 32,
 })
+
+player.physic.setPosition(100, 100)
 
 player.animation.add({
     name: 'idle',
@@ -35,6 +36,7 @@ player.animation.add({
 
 player.animation.add({
     name: 'walk',
+    speed: 4,
     frames: [
         { x: 0, y: 0 },
         { x: 1 * 32, y: 0 },
@@ -49,26 +51,16 @@ player.animation.add({
 
 player.animation.play('idle')
 
-player.action.add({
-    name: 'left',
-    callback: () => {
-        player.position.move(1, 0)
-    },
-})
-
-player.action.add({
-    name: 'right',
-    callback: () => {},
-})
-
 player.keymap.add({
     keys: ['ArrowLeft'],
     onKeydown: () => {
         player.animation.play('walk')
         player.sprite.update({ flipX: true })
+        player.physic.move(-1, 0)
     },
     onKeyup: () => {
         player.animation.play('idle')
+        player.physic.move(0, 0)
     },
 })
 
@@ -77,9 +69,11 @@ player.keymap.add({
     onKeydown: () => {
         player.animation.play('walk')
         player.sprite.update({ flipX: false })
+        player.physic.move(1, 0)
     },
     onKeyup: () => {
         player.animation.play('idle')
+        player.physic.move(0, 0)
     },
 })
 

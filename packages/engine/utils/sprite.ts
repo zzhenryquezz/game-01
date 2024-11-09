@@ -16,6 +16,31 @@ interface UpdateOptions {
     flipY: boolean
 }
 
+interface MakeFramesPayload {
+    startX: number
+    startY: number
+
+    width: number
+    height: number
+
+    count: number
+}
+
+export function makeFrames(payload: MakeFramesPayload) {
+    const frames = [] as { x: number; y: number }[]
+
+    for (let i = 0; i < payload.count; i++) {
+        const x = (payload.startX + i) * payload.width
+        const y = payload.startY * payload.height
+
+        frames.push({ x, y })
+    }
+
+    console.log(frames)
+
+    return frames
+}
+
 export function makeSprite(eid: number) {
     const sprite = {
         update(options?: Partial<UpdateOptions>) {
