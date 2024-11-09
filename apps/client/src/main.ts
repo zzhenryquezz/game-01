@@ -5,6 +5,8 @@ import { createEntity } from 'engine/utils/createEntity'
 import { usePosition } from 'engine/utils/position'
 import { useSprite } from 'engine/utils/sprite'
 import { useAnimation } from 'engine/utils/animation'
+import { useKeymap } from 'engine/utils/keymap'
+import { useAction } from 'engine/utils/action'
 
 const canvas = document.getElementById('game') as HTMLCanvasElement
 
@@ -13,7 +15,7 @@ canvas.height = window.innerHeight
 
 const game = createGame(canvas)
 
-const player = createEntity(game.word, [useSprite, useAnimation, usePosition])
+const player = createEntity(game.word, [useSprite, useAnimation, usePosition, useKeymap, useAction])
 
 player.sprite.update({
     src: '/player.png',
@@ -36,6 +38,40 @@ player.animation.add({
 })
 
 player.animation.play('idle')
+
+player.action.add({
+    name: 'left',
+    callback: () => {
+        player.position.move(1, 0)
+    },
+})
+
+player.action.add({
+    name: 'right',
+    callback: () => {
+        player.position.move(1, 0)
+    },
+})
+
+player.keymap.add({
+    keys: ['ArrowLeft'],
+    onKeydown: () => {
+        console.log('start moving right')
+    },
+    onKeyup: () => {
+        console.log('stop moving right')
+    },
+})
+
+player.keymap.add({
+    keys: ['ArrowRight'],
+    onKeydown: () => {
+        console.log('start moving right')
+    },
+    onKeyup: () => {
+        console.log('stop moving right')
+    },
+})
 
 const enemy = createEntity(game.word, [useSprite, useAnimation, usePosition])
 
